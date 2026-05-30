@@ -197,8 +197,7 @@
 <body class="antialiased min-h-screen relative overflow-x-hidden noise-bg flex items-center justify-center">
 
     <!-- Decorative Background -->
-    <div class="absolute top-[-20%] left-[10%] w-[500px] h-[500px] bg-latte/5 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[5%] w-[400px] h-[400px] bg-sage/5 blur-[100px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-[-15%] right-[5%] w-[300px] h-[300px] bg-latte/3 blur-[100px] rounded-full pointer-events-none"></div>
 
     <!-- Container -->
     <div class="w-full max-w-md px-6 relative z-10">
@@ -209,12 +208,12 @@
             <!-- Header -->
             <div class="text-center mb-8">
                 <a href="/" class="inline-block mb-6">
-                    <div class="logo-box">
-                        ☕
+                    <div class="logo-box" style="background: linear-gradient(135deg, rgba(198, 168, 139, 0.2), rgba(198, 168, 139, 0.05)); border: 1.5px solid rgba(198, 168, 139, 0.3);">
+                        <span style="font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #c6a88b, #ddbfa3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">B</span>
                     </div>
                 </a>
-                <h1 class="text-3xl font-bold text-white mb-2">Selamat Datang</h1>
-                <p class="text-white/50 text-sm">Masuk ke akun Anda untuk melanjutkan</p>
+                <h1 class="text-3xl font-bold text-white mb-2">Brew & Breathe</h1>
+                <p class="text-white/50 text-sm">Platform komunitas coffee shop untuk ketenangan mental</p>
             </div>
 
             <!-- Error Messages -->
@@ -247,7 +246,7 @@
                         type="text"
                         name="login"
                         class="form-input"
-                        placeholder="Masukkan email atau username"
+                        placeholder="user1@example.com"
                         required
                         autofocus
                         value="{{ old('login') }}"
@@ -261,32 +260,31 @@
                         type="password"
                         name="password"
                         class="form-input"
-                        placeholder="Masukkan password"
+                        placeholder="••••••••"
                         required
                     >
                 </div>
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn-submit mt-4">
-                    Masuk
+                    Masuk ke Dashboard
                 </button>
             </form>
 
             <!-- Divider -->
             <div class="divider">
-                <span>Baru di platform?</span>
+                <span>Tidak punya akun?</span>
             </div>
 
-            <!-- Register Link -->
-            <div class="text-center">
-                <p class="text-white/60 text-sm mb-2">
-                    <a href="{{ route('register') }}" class="link-latte font-semibold hover:underline">
-                        Buat akun baru
-                    </a>
-                </p>
-                <p class="text-white/40 text-xs">
-                    <a href="/" class="link-secondary">← Kembali ke beranda</a>
-                </p>
+            <!-- Demo Credentials Section -->
+            <div style="padding: 16px; background-color: rgba(198, 168, 139, 0.05); border: 1px solid rgba(198, 168, 139, 0.15); border-radius: 12px; margin-bottom: 20px;">
+                <p style="font-size: 12px; color: #c6a88b; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">Demo Accounts</p>
+                <div style="font-size: 13px; color: #f4f4f5; line-height: 1.6;">
+                    <p style="margin-bottom: 6px;"><strong>Admin:</strong> admin@dailycoffee.com</p>
+                    <p style="margin-bottom: 10px; color: rgba(255, 255, 255, 0.5);">Password: admin123</p>
+                    <p style="margin-bottom: 6px; padding-top: 6px; border-top: 1px solid rgba(198, 168, 139, 0.1);"><strong>User:</strong> user1@example.com</p>
+                    <p style="color: rgba(255, 255, 255, 0.5);">Password: password</p>
+                </div>
             </div>
         </div>
 

@@ -22,6 +22,7 @@ class CoffeeShop extends Model
         'rating',
         'deskripsi',
         'kecamatan_id',
+        'image_url',
     ];
 
     /**

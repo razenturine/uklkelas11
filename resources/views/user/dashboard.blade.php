@@ -141,7 +141,7 @@
             <form action="{{ route('logout') }}" method="POST" class="m-0">
                 @csrf
                 <button type="submit" class="px-4 py-2 rounded-full bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 text-xs font-semibold transition-all border border-red-500/20 hover:border-red-500/40">
-                    ✕ Logout
+                    Logout
                 </button>
             </form>
         </div>
@@ -195,8 +195,7 @@
                         <div class="flex-1 text-center md:text-left">
                             <!-- Greeting -->
                             <div class="flex items-center gap-2 justify-center md:justify-start mb-2">
-                                <h1 class="text-3xl md:text-4xl font-bold text-white">Halo, {{ auth()->user()->name }}</h1>
-                                <span class="text-3xl">👋</span>
+                                <h1 class="text-3xl md:text-4xl font-bold text-white">{{ auth()->user()->name }}</h1>
                             </div>
 
                             <!-- Status -->
@@ -233,13 +232,13 @@
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-8 pt-8 border-t border-white/5">
                         <a href="{{ route('user.view-profile') }}" class="px-6 py-2.5 rounded-full bg-white text-espresso text-xs font-bold hover:bg-latte transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                            👤 Lihat Profil Lengkap
+                            Lihat Profil Lengkap
                         </a>
                         <a href="{{ route('user.profile') }}" class="px-6 py-2.5 rounded-full border border-white/10 bg-black/30 text-white text-xs font-semibold hover:border-latte/40 hover:bg-black/50 transition-all">
-                            ✏️ Edit Profil
+                            Edit Profil
                         </a>
                         <a href="#" class="px-6 py-2.5 rounded-full border border-white/10 bg-black/30 text-white text-xs font-semibold hover:border-sage/40 hover:bg-black/50 transition-all">
-                            ⚙️ Pengaturan
+                            Pengaturan
                         </a>
                     </div>
                 </div>
@@ -254,33 +253,33 @@
 
                     <!-- Browse Coffee Shops -->
                     <a href="#" class="action-card rounded-2xl border border-white/5 bg-mocha/50 p-8 backdrop-blur-md glass-card hover:border-white/10">
-                        <div class="action-icon mb-4">☕</div>
+                        <div class="action-icon mb-4" style="width: 48px; height: 48px; background: linear-gradient(135deg, #c6a88b, #ddbfa3); border-radius: 12px;"></div>
                         <h3 class="text-xl font-bold text-white mb-2">Jelajahi Coffee Shops</h3>
-                        <p class="text-white/50 text-sm">Temukan kedai kopi terbaik dengan suasana tenang untuk produktivitas.</p>
+                        <p class="text-white/50 text-sm">Temukan kedai kopi terbaik dengan suasana tenang untuk produktivitas dan keseimbangan mental.</p>
                         <p class="text-white/30 text-xs mt-4 uppercase tracking-widest font-mono">Lihat Daftar →</p>
                     </a>
 
                     <!-- Community Posts -->
                     <a href="#" class="action-card rounded-2xl border border-white/5 bg-mocha/50 p-8 backdrop-blur-md glass-card hover:border-white/10">
-                        <div class="action-icon mb-4">💬</div>
-                        <h3 class="text-xl font-bold text-white mb-2">Komunitas</h3>
-                        <p class="text-white/50 text-sm">Bergabung dengan komunitas, baca postingan, dan bagikan pengalaman.</p>
+                        <div class="action-icon mb-4" style="width: 48px; height: 48px; background: linear-gradient(135deg, #8a9b83, #a8b89a); border-radius: 12px;"></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Komunitas & Diskusi</h3>
+                        <p class="text-white/50 text-sm">Bergabung dengan komunitas, baca postingan, dan bagikan pengalaman dengan sesama pecinta kopi.</p>
                         <p class="text-white/30 text-xs mt-4 uppercase tracking-widest font-mono">Lihat Komunitas →</p>
                     </a>
 
                     <!-- Social Battery Tracker -->
                     <a href="#" class="action-card rounded-2xl border border-white/5 bg-mocha/50 p-8 backdrop-blur-md glass-card hover:border-white/10">
-                        <div class="action-icon mb-4">🔋</div>
-                        <h3 class="text-xl font-bold text-white mb-2">Social Battery Tracker</h3>
-                        <p class="text-white/50 text-sm">Pantau energi sosial Anda dan dapatkan rekomendasi ruang yang tepat.</p>
+                        <div class="action-icon mb-4" style="width: 48px; height: 48px; background: linear-gradient(135deg, #ddbfa3, #e8cdb4); border-radius: 12px;"></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Monitor Energi Sosial</h3>
+                        <p class="text-white/50 text-sm">Pantau tingkat energi sosial Anda dan dapatkan rekomendasi ruang yang paling sesuai dengan kondisi mental Anda.</p>
                         <p class="text-white/30 text-xs mt-4 uppercase tracking-widest font-mono">Mulai Tracking →</p>
                     </a>
 
                     <!-- My Insights -->
                     <a href="#" class="action-card rounded-2xl border border-white/5 bg-mocha/50 p-8 backdrop-blur-md glass-card hover:border-white/10">
-                        <div class="action-icon mb-4">📊</div>
+                        <div class="action-icon mb-4" style="width: 48px; height: 48px; background: linear-gradient(135deg, #b8a89b, #c9b8aa); border-radius: 12px;"></div>
                         <h3 class="text-xl font-bold text-white mb-2">Analytics & Insights</h3>
-                        <p class="text-white/50 text-sm">Lihat pola produktivitas dan preferensi ruang terbaik Anda.</p>
+                        <p class="text-white/50 text-sm">Lihat pola produktivitas Anda, preferensi ruang terbaik, dan dapatkan insights untuk kesehatan mental yang lebih baik.</p>
                         <p class="text-white/30 text-xs mt-4 uppercase tracking-widest font-mono">Lihat Insights →</p>
                     </a>
 

@@ -36,6 +36,7 @@ class CoffeeShopController extends Controller
             'harga_max' => 'required|integer|gte:harga_min',
             'rating' => 'required|numeric|min:1|max:5',
             'deskripsi' => 'required|string',
+            'image_url' => 'nullable|url',
         ], [
             'rating.min' => 'Rating minimal adalah 1',
             'rating.max' => 'Rating maksimal adalah 5',
@@ -69,6 +70,7 @@ class CoffeeShopController extends Controller
             'harga_max' => 'required|integer|gte:harga_min',
             'rating' => 'required|numeric|min:1|max:5',
             'deskripsi' => 'required|string',
+            'image_url' => 'nullable|url',
         ], [
             'rating.min' => 'Rating minimal adalah 1',
             'rating.max' => 'Rating maksimal adalah 5',
@@ -77,7 +79,7 @@ class CoffeeShopController extends Controller
 
         // Cek apakah ada perubahan minimal 1 field
         $perubahan = 0;
-        $fields = ['nama', 'daerah', 'kecamatan', 'alamat', 'jam_buka', 'harga_min', 'harga_max', 'rating'];
+        $fields = ['nama', 'daerah', 'kecamatan', 'alamat', 'jam_buka', 'harga_min', 'harga_max', 'rating', 'image_url', 'deskripsi'];
         
         foreach ($fields as $field) {
             if ($request->input($field) != $data->$field) {
