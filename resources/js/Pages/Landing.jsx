@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from '@inertiajs/react';
-import { ArrowUpRight, MapPin, X } from 'lucide-react';
-import Lenis from '@studio-freight/lenis';
-import { MOCK_CAFES } from '../lib/mock';
-import { CustomCursor } from '../Components/GlobalComponents';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Head, Link } from '@inertiajs/react';
+import { MapPin, ArrowUpRight, X } from 'lucide-react';
+import { MOCK_CAFES, useAuth } from '../Components/Shared';
 
-export default function LandingPage() {
+export default function Landing() {
   const [time, setTime] = useState("");
   const [activeModal, setActiveModal] = useState(null);
-
-  // Hardcode user as null for the landing page for now since we mock auth
-  // In a real app we'd pass user as a prop via Inertia.
-  const user = null;
+  const { user } = useAuth();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,68 +15,36 @@ export default function LandingPage() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      smoothWheel: true,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
-
   return (
     <div className="min-h-screen relative selection:bg-terracotta selection:text-alabaster bg-alabaster overflow-hidden">
-      <CustomCursor />
-      {/* FIXED TOP LEFT LOGO */}
-      <div className="fixed top-6 left-6 font-clash font-black text-3xl tracking-tighter mix-blend-difference text-alabaster z-50 pointer-events-none">
-        NGOPI.
-      </div>
-
-      {/* TOP RIGHT NAV */}
-      <nav className="fixed top-6 right-6 flex justify-end z-50 pointer-events-none w-full max-w-md">
-        <div className="font-mono text-xs tracking-widest uppercase flex flex-col items-end gap-2 pointer-events-auto bg-alabaster/90 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none p-4 md:p-0 border md:border-none border-borderline md:mix-blend-difference md:text-alabaster shadow-sm md:shadow-none">
+      <Head title="Info Ngopi Hari Ini" />
+      {/* TOP NAV */}
+      <nav className="fixed top-0 w-full flex justify-between items-center p-6 bg-alabaster/0 z-50 mix-blend-difference text-alabaster pointer-events-none">
+        <div className="font-clash font-black text-3xl tracking-tighter">NGOPI.</div>
+        <div className="font-mono text-xs tracking-widest uppercase flex items-center gap-6 pointer-events-auto">
           <span className="hidden md:inline-block border border-alabaster px-3 py-1 font-bold">{time}</span>
           {user ? (
-            <Link href="/dashboard" className="hover:text-terracotta transition-colors font-bold border border-current px-4 py-2 bg-espresso md:bg-transparent text-alabaster md:hover:text-terracotta md:hover:bg-transparent hover:bg-terracotta hover:border-terracotta">[ DASHBOARD ]</Link>
+            <Link href="/dashboard" className="hover:text-[var(--color-terracotta)] transition-colors font-bold border border-alabaster px-3 py-1">[ DASHBOARD ]</Link>
           ) : (
-            <Link href="/login" className="hover:text-terracotta transition-colors font-bold border border-current px-4 py-2 bg-espresso text-alabaster md:bg-transparent hover:bg-terracotta hover:text-espresso md:hover:bg-transparent md:hover:text-terracotta">[ MASUK / DAFTAR ]</Link>
+            <Link href="/login" className="hover:text-[var(--color-terracotta)] transition-colors font-bold border border-alabaster px-3 py-1">[ MASUK / DAFTAR ]</Link>
           )}
         </div>
       </nav>
 
       {/* HERO SECTION - CONTROLLED PROPORTIONS */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center border-b border-borderline px-6 md:px-12 bg-alabaster pt-32 pb-24">
+      <section className="relative min-h-[90vh] flex flex-col justify-center border-b border-borderline px-6 md:px-12 bg-alabaster">
         <div className="absolute top-0 right-0 w-full md:w-[60vw] h-full border-l border-borderline overflow-hidden grayscale">
-          <motion.img 
+          <img 
             src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop" 
             alt="Skena" 
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full scale-105 hover:scale-100 transition-transform duration-[15s]"
           />
         </div>
         
         {/* Harmonious Text overlay */}
         <div className="relative z-10 w-full md:max-w-4xl pointer-events-none mix-blend-difference text-alabaster">
-          <h1 className="font-clash text-[clamp(4rem,10vw,10rem)] font-black uppercase tracking-tighter leading-[0.85] mt-12 md:mt-0 flex flex-col">
-            {['Info', 'Ngopi', 'Hari', 'Ini.'].map((word, i) => (
-              <div key={i} className="overflow-hidden pb-2">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 1, delay: i * 0.1, ease: [0.76, 0, 0.24, 1] }}
-                  className="block"
-                >
-                  {word}
-                </motion.span>
-              </div>
-            ))}
+          <h1 className="font-clash text-[clamp(4rem,10vw,10rem)] font-black uppercase tracking-tighter leading-[0.95] mt-20 md:mt-0">
+            Info<br/>Ngopi<br/>Hari<br/>Ini.
           </h1>
         </div>
         
@@ -91,11 +53,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* DIREKTORI GRID - CONTROLLED WHITESPACE */}
+      {/* DIRECTORY GRID - CONTROLLED WHITESPACE */}
       <section className="py-24 px-6 md:px-12 bg-alabaster">
         <div className="mb-12 border-b-2 border-espresso pb-4">
           <h2 className="font-mono text-sm tracking-widest uppercase font-bold text-espresso flex items-center gap-3">
-            <span className="w-3 h-3 bg-terracotta inline-block"></span> DIREKTORI SKENA LOKAL
+            <span className="w-3 h-3 bg-[var(--color-terracotta)] inline-block"></span> DIREKTORI SKENA LOKAL
           </h2>
         </div>
         
@@ -106,12 +68,12 @@ export default function LandingPage() {
               onClick={() => setActiveModal(cafe)}
               className="p-8 border border-borderline hover:bg-espresso hover:text-alabaster transition-colors group relative cursor-pointer shadow-sm"
             >
-              <MapPin className="mb-10 opacity-20 group-hover:opacity-100 group-hover:text-terracotta transition-opacity" size={40} />
+              <MapPin className="mb-10 opacity-20 group-hover:opacity-100 group-hover:text-[var(--color-terracotta)] transition-opacity" size={40} />
               <h3 className="font-clash text-3xl font-black mb-3 uppercase leading-none">{cafe.name}</h3>
-              <p className="font-mono text-xs font-bold mb-10 opacity-80 text-terracotta">{cafe.area}</p>
+              <p className="font-mono text-xs font-bold mb-10 opacity-80 text-[var(--color-terracotta)]">{cafe.area}</p>
               <div className="flex justify-between items-end font-mono text-[10px] font-bold border-t border-borderline/30 group-hover:border-alabaster/30 pt-4">
                 <span className="uppercase">{cafe.vibe}</span>
-                <ArrowUpRight className="group-hover:text-terracotta" size={16}/>
+                <ArrowUpRight className="group-hover:text-[var(--color-terracotta)]" size={16}/>
               </div>
             </div>
           ))}
@@ -129,13 +91,13 @@ export default function LandingPage() {
         <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col justify-between bg-espresso text-alabaster">
           <div className="font-mono text-xs font-bold uppercase flex justify-between border-b border-borderline/30 pb-4">
             <p className="opacity-60">COORD: -7.2504, 112.7688</p>
-            <p className="text-terracotta animate-pulse">SYS_STATUS: ONLINE</p>
+            <p className="text-[var(--color-terracotta)] animate-pulse">SYS_STATUS: ONLINE</p>
           </div>
           <div className="my-16 lg:my-24">
             <h1 className="font-clash text-[clamp(4rem,8vw,8rem)] leading-[0.8] font-black tracking-tighter mix-blend-exclusion">NGOPI.</h1>
           </div>
           <div className="flex justify-between border-t border-borderline/30 pt-6 font-mono text-xs font-bold uppercase">
-            <Link href="/admin" className="hover:text-terracotta transition-colors">[ PUSAT KONTROL ]</Link>
+            <Link href="/admin" className="hover:text-[var(--color-terracotta)] transition-colors">[ PUSAT KONTROL ]</Link>
             <span className="opacity-60">© 2026</span>
           </div>
         </div>
@@ -147,11 +109,11 @@ export default function LandingPage() {
           <div className="bg-alabaster w-full max-w-3xl border border-espresso flex flex-col shadow-[8px_8px_0_0_#D66838]" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center p-4 md:p-6 border-b border-espresso bg-espresso text-alabaster">
               <span className="font-mono text-xs uppercase font-bold">SYS_DATA // {activeModal.id}</span>
-              <button onClick={() => setActiveModal(null)} className="hover:text-terracotta transition-colors"><X size={20}/></button>
+              <button onClick={() => setActiveModal(null)} className="hover:text-[var(--color-terracotta)] transition-colors"><X size={20}/></button>
             </div>
-            <div className="p-8 md:p-12">
+            <div className="p-8 md:p-12 text-espresso">
               <h2 className="font-clash text-[clamp(2.5rem,5vw,4rem)] font-black uppercase mb-4 tracking-tighter leading-none">{activeModal.name}</h2>
-              <p className="font-mono text-terracotta font-bold uppercase text-sm mb-10 border-l-4 border-terracotta pl-3">{activeModal.area}</p>
+              <p className="font-mono text-[var(--color-terracotta)] font-bold uppercase text-sm mb-10 border-l-4 border-terracotta pl-3">{activeModal.area}</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-sm mb-10">
                 <div className="border border-borderline p-6 bg-alabaster shadow-sm">
@@ -168,11 +130,7 @@ export default function LandingPage() {
                 </div>
               </div>
               
-              {/* Maps Interaction */}
-              <button 
-                onClick={() => window.open(`https://maps.google.com/?q=${activeModal.name} ${activeModal.area}`, '_blank')}
-                className="w-full py-5 border border-espresso bg-transparent text-espresso hover:bg-espresso hover:text-alabaster transition-colors font-clash font-black uppercase text-xl"
-              >
+              <button className="w-full py-5 border border-espresso bg-transparent text-espresso hover:bg-espresso hover:text-alabaster transition-colors font-clash font-black uppercase text-xl">
                 [ BUKA DI MAPS ]
               </button>
             </div>

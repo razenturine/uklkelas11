@@ -1,19 +1,28 @@
-import React from 'react';
-import { Link } from '@inertiajs/react';
+import React, { useEffect } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
 import { ShieldAlert, MapPin } from 'lucide-react';
-import { MOCK_CAFES } from '../lib/mock';
-import { CustomCursor } from '../Components/GlobalComponents';
+import { MOCK_CAFES, useAuth } from '../Components/Shared';
 
-export default function AdminPanel() {
+export default function Admin() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user || user.role !== 'admin') {
+      router.visit('/dashboard');
+    }
+  }, [user]);
+
+  if (!user || user.role !== 'admin') return null;
+
   return (
     <div className="min-h-screen bg-espresso text-borderline p-6 lg:p-12 selection:bg-alabaster selection:text-espresso flex flex-col">
-      <CustomCursor />
+      <Head title="Admin Panel" />
       <header className="mb-12 border-b border-borderline/30 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
           <h1 className="font-clash text-[clamp(3rem,6vw,6rem)] font-black uppercase text-alabaster tracking-tighter leading-none">Kontrol Panel</h1>
-          <h2 className="font-mono text-terracotta text-sm uppercase tracking-widest mt-4 font-bold border-l-2 border-terracotta pl-3">// PUSAT SKENA (GOD MODE)</h2>
+          <h2 className="font-mono text-[var(--color-terracotta)] text-sm uppercase tracking-widest mt-4 font-bold border-l-2 border-[var(--color-terracotta)] pl-3">// PUSAT SKENA (GOD MODE)</h2>
         </div>
-        <Link href="/dashboard" className="font-mono text-xs font-bold border border-borderline/30 px-8 py-4 hover:bg-alabaster hover:text-espresso transition-colors uppercase shadow-[4px_4px_0_0_#3E5146]">
+        <Link href="/dashboard" className="font-mono text-xs font-bold border border-borderline/30 px-8 py-4 hover:bg-alabaster hover:text-espresso transition-colors uppercase shadow-[4px_4px_0_0_#3E5146] text-borderline">
           [ KEMBALI KE BASE ]
         </Link>
       </header>
@@ -22,7 +31,7 @@ export default function AdminPanel() {
         {/* USERS TABLE */}
         <div className="border border-borderline/30 flex flex-col bg-borderline/5">
           <div className="bg-borderline/10 p-5 border-b border-borderline/30 font-mono text-[10px] flex items-center gap-3 text-alabaster font-bold uppercase tracking-widest">
-            <ShieldAlert size={16} className="text-terracotta" /> [ DATA PENGGUNA AKTIF ]
+            <ShieldAlert size={16} className="text-[var(--color-terracotta)]" /> [ DATA PENGGUNA AKTIF ]
           </div>
           <div className="flex-1 overflow-auto">
             <table className="w-full font-mono text-xs text-left">
@@ -38,10 +47,10 @@ export default function AdminPanel() {
                 {['angsty_latte', 'macbook_warrior', 'broke_student'].map((usr, i) => (
                   <tr key={usr} className="border-b border-borderline/30 hover:bg-borderline/10 transition-colors">
                     <td className="p-5 font-bold uppercase truncate max-w-[120px]">{usr}</td>
-                    <td className="p-5 border-l border-borderline/30 text-sage font-bold">ONLINE</td>
+                    <td className="p-5 border-l border-borderline/30 text-[var(--color-sage)] font-bold">ONLINE</td>
                     <td className="p-5 border-l border-borderline/30 font-bold text-center">{i}</td>
                     <td className="p-5 border-l border-borderline/30">
-                      <button className="text-terracotta hover:text-alabaster font-bold transition-colors uppercase">[ BAN_USER ]</button>
+                      <button className="text-[var(--color-terracotta)] hover:text-alabaster font-bold transition-colors uppercase">[ BAN_USER ]</button>
                     </td>
                   </tr>
                 ))}
@@ -53,7 +62,7 @@ export default function AdminPanel() {
         {/* SPACES TABLE */}
         <div className="border border-borderline/30 flex flex-col bg-borderline/5">
           <div className="bg-borderline/10 p-5 border-b border-borderline/30 font-mono text-[10px] flex items-center gap-3 text-alabaster font-bold uppercase tracking-widest">
-            <MapPin size={16} className="text-sage" /> [ DIREKTORI SPACES ]
+            <MapPin size={16} className="text-[var(--color-sage)]" /> [ DIREKTORI SPACES ]
           </div>
           <div className="flex-1 overflow-auto">
             <table className="w-full font-mono text-xs text-left">
@@ -67,10 +76,10 @@ export default function AdminPanel() {
               <tbody>
                 {MOCK_CAFES.map((cafe) => (
                   <tr key={cafe.id} className="border-b border-borderline/30 hover:bg-borderline/10 transition-colors">
-                    <td className="p-5 font-bold uppercase text-terracotta truncate max-w-[150px]">{cafe.name}</td>
-                    <td className="p-5 border-l border-borderline/30 uppercase font-bold">{cafe.area}</td>
+                    <td className="p-5 font-bold uppercase text-[var(--color-terracotta)] truncate max-w-[150px]">{cafe.name}</td>
+                    <td className="p-5 border-l border-borderline/30 uppercase font-bold text-borderline">{cafe.area}</td>
                     <td className="p-5 border-l border-borderline/30">
-                      <button className="hover:text-alabaster font-bold transition-colors uppercase">[ EDIT_NODE ]</button>
+                      <button className="hover:text-alabaster font-bold transition-colors uppercase text-borderline">[ EDIT_NODE ]</button>
                     </td>
                   </tr>
                 ))}
