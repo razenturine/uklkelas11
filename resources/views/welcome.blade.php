@@ -1,565 +1,367 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Brew & Breathe') }} - Mental Wellness Through Coffee</title>
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&family=poppins:400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
-
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.tailwindcss.com"></script>
-    @endif
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Instrument Sans', 'sans-serif'],
-                        display: ['Poppins', 'sans-serif']
-                    },
-                    colors: {
-                        coffee: {
-                            50: '#f9f7f4',
-                            100: '#f3ede8',
-                            200: '#e8ddd4',
-                            300: '#dcc9bb',
-                            400: '#c8a878',
-                            500: '#b8944a',
-                            600: '#9d7d3d',
-                            700: '#7d6630',
-                            800: '#6b5829',
-                            900: '#4a3a1a',
-                        },
-                        cream: '#faf8f5',
-                        warm: '#f5ede3',
-                        brown: '#8b6f47',
-                        darkBrown: '#2c1810',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGOPI. — Arsitektur Nongkrong</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Theme Colors */
+        :root {
+            --color-alabaster: #FBF9F6;
+            --color-espresso: #160F0B;
+            --color-border: #E6E1DA;
         }
-
-        html {
-            scroll-behavior: smooth;
+        
+        html, body {
+            background-color: var(--color-alabaster);
+            color: var(--color-espresso);
+            font-family: 'Space Mono', monospace;
         }
-
+        
+        /* CRITICAL: Kill default cursor */
         body {
-            background-color: #faf8f5;
-            color: #2c1810;
-            font-family: 'Instrument Sans', sans-serif;
-            line-height: 1.6;
+            cursor: none;
         }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
+        
+        a, button {
+            cursor: none;
         }
-
-        /* Smooth animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .font-clash {
+            font-family: 'Clash Display', sans-serif;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        .font-mono {
+            font-family: 'Space Mono', monospace;
         }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        
+        /* Custom Cursor */
+        #custom-cursor {
+            pointer-events: none !important;
+            z-index: 99999;
+            will-change: transform;
         }
-
-        .animate-fade-in {
-            animation: fadeInUp 0.8s ease-out forwards;
+        
+        /* Backdrop Blur for Header */
+        .header-blur {
+            backdrop-filter: blur(8px);
+            background-color: rgba(251, 249, 246, 0.8);
         }
-
-        .animate-fade {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .animate-slide-left {
-            animation: slideInLeft 0.8s ease-out forwards;
-        }
-
-        .delay-100 { animation-delay: 0.1s; opacity: 0; }
-        .delay-200 { animation-delay: 0.2s; opacity: 0; }
-        .delay-300 { animation-delay: 0.3s; opacity: 0; }
-        .delay-400 { animation-delay: 0.4s; opacity: 0; }
-        .delay-500 { animation-delay: 0.5s; opacity: 0; }
-
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #8b6f47 0%, #c8a878 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Glassmorphism cards */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 111, 71, 0.1);
-        }
-
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(139, 111, 71, 0.3);
-        }
-
-        /* Premium button styles */
-        .btn-primary {
-            background: linear-gradient(135deg, #8b6f47 0%, #a88b63 100%);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 24px rgba(139, 111, 71, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(139, 111, 71, 0.3);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #2c1810;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 15px;
-            border: 2px solid #d9d0c5;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: #8b6f47;
-            background: #f5ede3;
-        }
-
-        /* Feature cards */
-        .feature-card {
+        
+        /* Button Styling */
+        .btn-premium {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(139, 111, 71, 0.1);
+            z-50;
         }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(139, 111, 71, 0.12);
-            border-color: rgba(139, 111, 71, 0.3);
+        
+        .btn-premium:hover {
+            background-color: var(--color-espresso);
+            color: var(--color-alabaster);
         }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #8b6f47 0%, #c8a878 100%);
-            border-radius: 14px;
-            display: flex;
+        
+        /* Modal Backdrop */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(22, 15, 11, 0.6);
+            z-index: 50;
+            display: none;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
         }
-
-        /* Stats */
-        .stat-item {
-            text-align: center;
+        
+        .modal-backdrop.active {
+            display: flex;
         }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #8b6f47 0%, #c8a878 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
+        
+        .modal-content {
+            background-color: var(--color-alabaster);
+            border: 1px solid var(--color-border);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
         }
-
-        .stat-label {
-            font-weight: 600;
-            color: #2c1810;
-            margin-bottom: 4px;
-        }
-
-        .stat-description {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* Decorative elements */
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.3;
-            filter: blur(80px);
-            pointer-events: none;
-        }
-
-        .blob-1 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #8b6f47, #c8a878);
-            top: -200px;
-            left: -200px;
-        }
-
-        .blob-2 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #c8a878, #e8ddd4);
-            bottom: -150px;
-            right: -150px;
-        }
-
-        /* Section spacing */
-        section {
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-padding {
-            padding-top: 80px;
-            padding-bottom: 80px;
-        }
-
-        @media (max-width: 768px) {
-            .section-padding {
-                padding-top: 50px;
-                padding-bottom: 50px;
-            }
+        
+        /* Grid responsive classes */
+        .grid-cols-cafe {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
         }
     </style>
 </head>
-
-<body class="antialiased overflow-x-hidden">
-
-    <!-- Background blobs -->
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-
-    <!-- Navigation Header -->
-    <header class="fixed top-0 w-full z-50 bg-cream/80 backdrop-blur-md border-b border-coffee-100">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="/" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brown to-coffee-600 flex items-center justify-center text-white font-bold text-lg">
-                    ☕
-                </div>
-                <span class="font-bold text-xl text-darkBrown tracking-tight font-display">{{ config('app.name', 'Brew & Breathe') }}</span>
-            </a>
-
-            <!-- Navigation Links -->
-            @if (Route::has('login'))
-                <nav class="hidden md:flex items-center gap-8">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="btn-primary">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-darkBrown hover:text-brown font-500 transition-colors">Masuk</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn-secondary">Daftar Gratis</a>
-                        @endif
-                    @endauth
-                </nav>
-
-                <!-- Mobile menu -->
-                <div class="md:hidden flex items-center gap-4">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="btn-primary text-sm px-4 py-2">Dashboard</a>
-                    @else
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn-primary text-sm px-4 py-2">Daftar</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+<body class="bg-alabaster">
+    <!-- Custom Cursor -->
+    <div id="custom-cursor" class="fixed w-4 h-4 bg-white rounded-full pointer-events-none mix-blend-difference z-[99999] transition-transform duration-75 ease-out" style="transform: translate(-8px, -8px);"></div>
+    
+    <!-- Header -->
+    <header class="header-blur fixed top-0 left-0 right-0 z-40 border-b border-[#E6E1DA]">
+        <div class="max-w-full px-6 md:px-12 py-4 flex items-center justify-between">
+            <div class="flex-1">
+                <h1 class="font-clash text-2xl md:text-3xl font-bold" style="color: #160F0B;">NGOPI.</h1>
+            </div>
+            
+            <nav class="flex-1 hidden md:flex items-center justify-center gap-8">
+                <a href="#directory" class="font-mono text-sm hover:opacity-60 transition z-50" style="color: #160F0B;">Direktori</a>
+                <a href="#forum" class="font-mono text-sm hover:opacity-60 transition z-50" style="color: #160F0B;">Forum</a>
+            </nav>
+            
+            <div class="flex-1 flex items-center justify-end gap-4">
+                <a href="/login" class="btn-premium font-mono text-sm px-4 py-2 border border-[#160F0B] z-50" style="color: #160F0B;">MASUK</a>
+                <a href="/register" class="btn-premium font-mono text-sm px-6 py-2 z-50" style="background-color: #160F0B; color: #FBF9F6;">DAFTAR</a>
+            </div>
         </div>
     </header>
-
-    <!-- Main Content -->
-    <main class="relative">
-
-        <!-- Hero Section -->
-        <section class="section-padding pt-40 pb-32 max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto">
-                <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-coffee-100 border border-coffee-300 text-sm font-600 text-brown mb-8 animate-fade-in">
-                    <span class="w-2 h-2 rounded-full bg-brown animate-pulse"></span>
-                    Platform untuk Kesehatan Mental
+    
+    <!-- Hero Section -->
+    <section class="pt-24 md:pt-32 pb-12 md:pb-20 px-6 md:px-12">
+        <div class="max-w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center border-b border-[#E6E1DA] pb-12 md:pb-20">
+                <!-- Left: Typography -->
+                <div class="flex flex-col justify-center">
+                    <h2 class="font-clash text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6" style="color: #160F0B; letter-spacing: -0.02em;">
+                        ARSITEKTUR NONGKRONG
+                    </h2>
+                    <p class="font-mono text-sm md:text-base mb-8" style="color: #160F0B; opacity: 0.7;">
+                        SURABAYA - SIDOARJO
+                    </p>
+                    <p class="font-mono text-xs md:text-sm leading-relaxed mb-8" style="color: #160F0B; opacity: 0.6;">
+                        Jelajahi ruang nongkrong terbaik, komunitas coffee enthusiast, dan forum diskusi untuk menemukan destinasi sempurna Anda.
+                    </p>
                 </div>
-
-                <!-- Hero Heading -->
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-darkBrown leading-[1.1] mb-6 animate-fade-in delay-100">
-                    Temukan Kedamaian
-                    <span class="block gradient-text">di Setiap Tegukan</span>
-                </h1>
-
-                <!-- Hero Subheading -->
-                <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-10 animate-fade-in delay-200 max-w-2xl mx-auto">
-                    Platform kurasi coffee shop terbaik yang dirancang khusus untuk kesehatan mental. Jelajahi ruang tenang, pantau energi sosial Anda, dan terhubung dengan komunitas yang memahami.
-                </p>
-
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in delay-300">
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn-primary">Mulai Perjalanan Gratis</a>
-                    @endif
-                    <a href="#features" class="btn-secondary">Pelajari Lebih Lanjut</a>
+                
+                <!-- Right: Image -->
+                <div class="w-full aspect-[4/3] overflow-hidden rounded-none border border-[#E6E1DA]">
+                    <img 
+                        src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1200" 
+                        alt="Coffee Culture Surabaya" 
+                        class="w-full h-full object-cover"
+                    />
                 </div>
             </div>
-
-            <!-- Hero Visual -->
-            <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade delay-400">
-                <div class="glass-card p-8 rounded-2xl text-center">
-                    <div class="text-4xl mb-3">🔇</div>
-                    <h3 class="font-bold text-darkBrown mb-2">Ruang Sunyi</h3>
-                    <p class="text-sm text-gray-600">Di bawah 50dB</p>
-                </div>
-                <div class="glass-card p-8 rounded-2xl text-center">
-                    <div class="text-4xl mb-3">🔋</div>
-                    <h3 class="font-bold text-darkBrown mb-2">Social Battery</h3>
-                    <p class="text-sm text-gray-600">Pantau Energi Anda</p>
-                </div>
-                <div class="glass-card p-8 rounded-2xl text-center">
-                    <div class="text-4xl mb-3">👥</div>
-                    <h3 class="font-bold text-darkBrown mb-2">Komunitas</h3>
-                    <p class="text-sm text-gray-600">5K+ Anggota Aktif</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="section-padding bg-warm/50">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center max-w-2xl mx-auto mb-20">
-                    <h2 class="text-4xl md:text-5xl font-bold text-darkBrown mb-6">Fitur Unggulan</h2>
-                    <p class="text-lg text-gray-600">Semua yang Anda butuhkan untuk menemukan kedamaian dan produktivitas optimal</p>
-                </div>
-
-                <!-- Bento Grid Features -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="feature-card glass-card lg:col-span-2 p-8 md:p-12 min-h-[320px] flex flex-col justify-between bg-white">
-                        <div>
-                            <div class="feature-icon">🎯</div>
-                            <h3 class="text-2xl md:text-3xl font-bold text-darkBrown mb-4">Smart Coffee Shop Discovery</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Temukan kedai kopi dengan zona sunyi tertentu, tingkat kebisingan terukur, dan ramah untuk produktivitas. Kami menyeleksi setiap detail untuk kenyamanan Anda.
-                            </p>
-                        </div>
+        </div>
+    </section>
+    
+    <!-- Directory Section -->
+    <section id="directory" class="py-16 md:py-24 px-6 md:px-12 border-b border-[#E6E1DA]">
+        <div class="max-w-full">
+            <h3 class="font-clash text-4xl md:text-6xl font-bold mb-12 md:mb-16" style="color: #160F0B; letter-spacing: -0.02em;">
+                DIREKTORI RUANG
+            </h3>
+            
+            <div class="grid-cols-cafe">
+                <!-- Card 1: Volks Coffee -->
+                <div class="border border-[#E6E1DA] overflow-hidden flex flex-col">
+                    <div class="w-full aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&q=80&w=600" 
+                            alt="Volks Coffee" 
+                            class="w-full h-full object-cover"
+                        />
                     </div>
-
-                    <!-- Feature 2 -->
-                    <div class="feature-card glass-card p-8 min-h-[320px] flex flex-col justify-between bg-white">
-                        <div>
-                            <div class="feature-icon">📊</div>
-                            <h3 class="text-2xl font-bold text-darkBrown mb-4">Insights Real-time</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Analytics lengkap tentang pola produktivitas dan preferensi tempat Anda.
-                            </p>
-                        </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-clash text-xl md:text-2xl font-bold mb-2" style="color: #160F0B;">VOLKS COFFEE</h4>
+                        <p class="font-mono text-xs mb-2" style="opacity: 0.6;">Jl. Pemuda No. 118, Surabaya</p>
+                        <p class="font-mono text-xs mb-4" style="opacity: 0.7;">Specialty Grade • Modern Brutalist</p>
+                        <button class="btn-premium mt-auto font-mono text-sm px-4 py-2 border border-[#160F0B] z-50 cafe-detail-btn" data-cafe="volks" style="color: #160F0B;">
+                            LIHAT DETAIL →
+                        </button>
                     </div>
-
-                    <!-- Feature 3 -->
-                    <div class="feature-card glass-card p-8 min-h-[320px] flex flex-col justify-between bg-white">
-                        <div>
-                            <div class="feature-icon">⚡</div>
-                            <h3 class="text-2xl font-bold text-darkBrown mb-4">Social Battery Tracker</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Ukur kapasitas sosial harian dan dapatkan rekomendasi ruang yang sesuai.
-                            </p>
-                        </div>
+                </div>
+                
+                <!-- Card 2: Kopitagram -->
+                <div class="border border-[#E6E1DA] overflow-hidden flex flex-col">
+                    <div class="w-full aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1495474472902-4d71bcdd2085?auto=format&fit=crop&q=80&w=600" 
+                            alt="Kopitagram" 
+                            class="w-full h-full object-cover"
+                        />
                     </div>
-
-                    <!-- Feature 4 -->
-                    <div class="feature-card glass-card p-8 min-h-[320px] flex flex-col justify-between bg-white">
-                        <div>
-                            <div class="feature-icon">👥</div>
-                            <h3 class="text-2xl font-bold text-darkBrown mb-4">Community Hub</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Berbagi cerita, mendapat dukungan, dan temukan teman sejati yang memahami.
-                            </p>
-                        </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-clash text-xl md:text-2xl font-bold mb-2" style="color: #160F0B;">KOPITAGRAM</h4>
+                        <p class="font-mono text-xs mb-2" style="opacity: 0.6;">Jl. Tunjungan No. 87, Surabaya</p>
+                        <p class="font-mono text-xs mb-4" style="opacity: 0.7;">Premium Grade • Minimalist Design</p>
+                        <button class="btn-premium mt-auto font-mono text-sm px-4 py-2 border border-[#160F0B] z-50 cafe-detail-btn" data-cafe="kopitagram" style="color: #160F0B;">
+                            LIHAT DETAIL →
+                        </button>
                     </div>
-
-                    <!-- Feature 5 -->
-                    <div class="feature-card glass-card lg:col-span-2 p-8 md:p-12 min-h-[320px] flex flex-col justify-between bg-white">
-                        <div>
-                            <div class="feature-icon">🏆</div>
-                            <h3 class="text-2xl md:text-3xl font-bold text-darkBrown mb-4">Komunitas Gathering & Events</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Ikuti gathering komunitas, networking sessions, dan mendapat kesempatan bertemu dengan individu yang peduli kesehatan mental.
-                            </p>
-                        </div>
+                </div>
+                
+                <!-- Card 3: Moengkopi -->
+                <div class="border border-[#E6E1DA] overflow-hidden flex flex-col">
+                    <div class="w-full aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1501339847302-ac426a36c72d?auto=format&fit=crop&q=80&w=600" 
+                            alt="Moengkopi" 
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-clash text-xl md:text-2xl font-bold mb-2" style="color: #160F0B;">MOENGKOPI</h4>
+                        <p class="font-mono text-xs mb-2" style="opacity: 0.6;">Jl. Genteng Kali No. 56, Surabaya</p>
+                        <p class="font-mono text-xs mb-4" style="opacity: 0.7;">Artisan Grade • Heritage Vibes</p>
+                        <button class="btn-premium mt-auto font-mono text-sm px-4 py-2 border border-[#160F0B] z-50 cafe-detail-btn" data-cafe="moengkopi" style="color: #160F0B;">
+                            LIHAT DETAIL →
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Card 4: Titik Koma -->
+                <div class="border border-[#E6E1DA] overflow-hidden flex flex-col">
+                    <div class="w-full aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&q=80&w=600" 
+                            alt="Titik Koma" 
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-clash text-xl md:text-2xl font-bold mb-2" style="color: #160F0B;">TITIK KOMA</h4>
+                        <p class="font-mono text-xs mb-2" style="opacity: 0.6;">Jl. Basuki Rachmat No. 234, Sidoarjo</p>
+                        <p class="font-mono text-xs mb-4" style="opacity: 0.7;">Contemporary • Type-Focused</p>
+                        <button class="btn-premium mt-auto font-mono text-sm px-4 py-2 border border-[#160F0B] z-50 cafe-detail-btn" data-cafe="titik-koma" style="color: #160F0B;">
+                            LIHAT DETAIL →
+                        </button>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Social Proof Section -->
-        <section class="section-padding max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="stat-item animate-fade-in delay-100">
-                    <div class="stat-number">250+</div>
-                    <p class="stat-label">Coffee Shops</p>
-                    <p class="stat-description">Terpilih dan terkurasi</p>
-                </div>
-                <div class="stat-item animate-fade-in delay-200">
-                    <div class="stat-number">5K+</div>
-                    <p class="stat-label">Komunitas Aktif</p>
-                    <p class="stat-description">Individu yang peduli kesehatan mental</p>
-                </div>
-                <div class="stat-item animate-fade-in delay-300">
-                    <div class="stat-number">100%</div>
-                    <p class="stat-label">Aman & Privat</p>
-                    <p class="stat-description">Data terenkripsi dengan standar enterprise</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="section-padding bg-gradient-to-br from-brown via-coffee-600 to-darkBrown text-white">
-            <div class="max-w-3xl mx-auto text-center px-6">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Siap Memulai Perjalanan Anda?</h2>
-                <p class="text-xl opacity-90 mb-10">
-                    Bergabunglah dengan ribuan individu yang telah menemukan keseimbangan mental. Gratis, mudah, dan tanpa komitmen.
-                </p>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="inline-block bg-white text-brown px-10 py-4 rounded-full font-bold text-lg hover:bg-cream transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                        Daftar Sekarang →
-                    </a>
-                @endif
-            </div>
-        </section>
-
-    </main>
-
+        </div>
+    </section>
+    
     <!-- Footer -->
-    <footer class="bg-darkBrown text-white border-t border-coffee-800">
-        <div class="max-w-7xl mx-auto px-6 py-20">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <!-- Brand -->
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 rounded-lg bg-coffee-600 flex items-center justify-center text-white font-bold">☕</div>
-                        <span class="font-bold text-xl">{{ config('app.name', 'Brew & Breathe') }}</span>
+    <footer class="py-16 md:py-24 px-6 md:px-12 border-t border-[#E6E1DA]">
+        <div class="max-w-full">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24">
+                <!-- Map -->
+                <div class="md:col-span-1">
+                    <div class="w-full aspect-square border border-[#E6E1DA] overflow-hidden">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6968626181636!2d112.73814!3d-7.25045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb69381c14b5%3A0x542c949e7e2dd80d!2sSurabaya%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1234567890" 
+                            width="100%" 
+                            height="100%" 
+                            style="border: none; filter: grayscale(100%);" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">Platform kesehatan mental melalui coffee shop terbaik. Temukan kedamaian, bangun komunitas, tingkatkan produktivitas.</p>
                 </div>
-
+                
                 <!-- Links -->
-                <div>
-                    <h4 class="font-bold mb-6">Platform</h4>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><a href="#" class="hover:text-white transition-colors">Jelajahi Kedai</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Komunitas</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Insights</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Gathering</a></li>
+                <div class="md:col-span-1">
+                    <h4 class="font-clash text-lg font-bold mb-6" style="color: #160F0B;">LEGAL</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="font-mono text-xs z-50 hover:opacity-50 transition" style="color: #160F0B;">PRIVACY POLICY</a></li>
+                        <li><a href="#" class="font-mono text-xs z-50 hover:opacity-50 transition" style="color: #160F0B;">TERMS OF SERVICE</a></li>
+                        <li><a href="#" class="font-mono text-xs z-50 hover:opacity-50 transition" style="color: #160F0B;">COMMUNITY GUIDELINES</a></li>
                     </ul>
                 </div>
-
-                <!-- Company -->
-                <div>
-                    <h4 class="font-bold mb-6">Tentang</h4>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><a href="#" class="hover:text-white transition-colors">Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Kontak</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Karir</a></li>
-                    </ul>
-                </div>
-
-                <!-- Legal -->
-                <div>
-                    <h4 class="font-bold mb-6">Legal</h4>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="border-t border-coffee-800 pt-8 flex flex-col md:flex-row items-center justify-between text-gray-400 text-sm">
-                <p>&copy; 2026 {{ config('app.name', 'Brew & Breathe') }}. All rights reserved.</p>
-                <div class="flex items-center gap-8 mt-6 md:mt-0">
-                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
-                    <a href="#" class="hover:text-white transition-colors">Instagram</a>
-                    <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                
+                <!-- Contact & Copyright -->
+                <div class="md:col-span-1">
+                    <h4 class="font-clash text-lg font-bold mb-6" style="color: #160F0B;">KONTAK</h4>
+                    <p class="font-mono text-xs mb-4" style="opacity: 0.7;">
+                        COMM@NGOPI.ID<br>
+                        +62 811 0000 0000
+                    </p>
+                    <p class="font-mono text-xs" style="opacity: 0.5;">
+                        ©2026 NGOPI. ALL RIGHTS RESERVED.
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
-
-    <script>
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+    
+    <!-- Modal -->
+    <div id="detailModal" class="modal-backdrop">
+        <div class="modal-content">
+            <div class="flex justify-between items-start mb-6">
+                <h3 id="modalTitle" class="font-clash text-2xl font-bold" style="color: #160F0B;">VOLKS COFFEE</h3>
+                <button class="btn-premium font-mono text-sm z-50" id="closeModal" style="color: #160F0B;">✕</button>
+            </div>
+            <p id="modalText" class="font-mono text-sm mb-6" style="opacity: 0.7;"></p>
+            <div class="w-full aspect-video border border-[#E6E1DA] mb-6 overflow-hidden">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6968626181636!2d112.73814!3d-7.25045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb69381c14b5%3A0x542c949e7e2dd80d!2sSurabaya%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1234567890" 
+                    width="100%" 
+                    height="100%" 
+                    style="border: none;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <button class="btn-premium font-mono text-sm px-6 py-2 w-full z-50" style="background-color: #160F0B; color: #FBF9F6;">
+                BUKA LOKASI
+            </button>
+        </div>
+    </div>
+    
+    <script type="module">
+        // Custom Cursor Tracking
+        const cursor = document.getElementById('custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 8}px, ${e.clientY - 8}px)`;
+        });
+        
+        // Modal Logic
+        const modal = document.getElementById('detailModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cafeButtons = document.querySelectorAll('.cafe-detail-btn');
+        
+        const cafeData = {
+            volks: {
+                title: 'VOLKS COFFEE',
+                text: 'Specialty Grade Coffee Roastery di jantung Surabaya. Menawarkan single origin dari berbagai daerah Indonesia. Suasana modern brutalist dengan fokus pada kualitas dan komunitas.'
+            },
+            kopitagram: {
+                title: 'KOPITAGRAM',
+                text: 'Premium Espresso Bar dengan koleksi third wave coffee terlengkap. Aesthetic Instagram-friendly dengan barista profesional. Sempurna untuk diskusi dan networking.'
+            },
+            moengkopi: {
+                title: 'MOENGKOPI',
+                text: 'Heritage Coffee Space dengan sentuhan tradisional Indonesia. Melayani kopi tubruk, manual brew, dan espresso. Ruang nyaman untuk komunitas lokal.'
+            },
+            'titik-koma': {
+                title: 'TITIK KOMA',
+                text: 'Type-Focused Contemporary Coffee Shop. Desain minimalis dengan perpustakaan kopi dan komunitas penulis. Tempat sempurna untuk brainstorming dan kolaborasi kreatif.'
+            }
+        };
+        
+        cafeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const cafe = btn.dataset.cafe;
+                const data = cafeData[cafe];
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalText').textContent = data.text;
+                modal.classList.add('active');
             });
         });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.remove('opacity-0');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-fade-in, .animate-fade, .animate-slide-left').forEach(el => {
-            observer.observe(el);
+        
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
         });
     </script>
-
 </body>
 </html>
